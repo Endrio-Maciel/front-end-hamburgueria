@@ -42,9 +42,9 @@ export function ManageAccounts() {
     fetchAccounts();
   }, []);
 
-  const handleEditAccount = async ({ id, name, balance }: Account) => {
+  // const handleEditAccount = async ({ id, name, balance }: Account) => {
    
-  };
+  // };
 
   const handleDeleteAccount = async (id: string) => {
     try {
@@ -129,7 +129,7 @@ export function ManageAccounts() {
                         : 'Saldo indisponível'}
                     </span>
                     <div className="flex gap-2">
-                      <Button
+                      {/* <Button
                         variant="ghost"
                         onClick={() => {
                           const name = prompt('Editar nome da conta:', account.name);
@@ -138,7 +138,7 @@ export function ManageAccounts() {
                         }}
                       >
                         <Edit className="w-4 h-4" />
-                      </Button>
+                      </Button> */}
 
                       <Button
                         variant="destructive"

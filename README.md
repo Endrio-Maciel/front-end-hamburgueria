@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# Sistema de Gestão Financeira - Frontend
 
-First, run the development server:
+Este repositório contém o frontend do sistema de gestão financeira para hamburgueria. O objetivo do projeto é permitir o controle e a visualização das entradas e saídas financeiras, com funcionalidades de previsão de lucro e controle de transações. 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tecnologias Utilizadas
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **React**: Biblioteca JavaScript para construção de interfaces de usuário.
+- **Next.js**: Framework React para renderização do lado servidor (SSR) e geração de sites estáticos (SSG).
+- **TailwindCSS**: Framework de CSS utilitário para estilização rápida e responsiva.
+- **Fetch API**: Para consumir a API do backend e realizar requisições HTTP.
+- **JWT (JSON Web Token)**: Para autenticação de usuários no sistema.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Funcionalidades
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Dashboard**: Exibição de gráficos financeiros com entradas, saídas e previsão de lucro.
+- **Transações**: Visualização, criação, edição e exclusão de transações financeiras.
+- **Categorias**: Criação e associação de transações a categorias personalizadas.
+- **Autenticação**: Sistema de login utilizando JWT.
 
-## Learn More
+## Autenticação
 
-To learn more about Next.js, take a look at the following resources:
+Este sistema utiliza **JWT (JSON Web Token)** para autenticação de usuários. Após realizar o login, o token gerado será armazenado localmente no navegador (geralmente em cookies ou localStorage) e será enviado nas requisições para garantir que o usuário tenha acesso às funcionalidades apropriadas.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Dependências
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `react`
+- `next`
+- `tailwindcss`
+- `axios` ou `fetch` (para consumo de API)
+- `jsonwebtoken` (para autenticação)
+- `react-router-dom` (para navegação, se necessário)

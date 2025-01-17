@@ -94,8 +94,13 @@ export function AddTransactionPage() {
     setAccountId("");
   } catch (err) {
     console.error(err);
-    if (err.response && err.response.status === 400 && err.response.data.message === "Saldo insuficiente.") {
-      setError("Saldo insuficiente na conta selecionada.");
+    if ((err as Response).status === 400) {
+      const errorData = await (err as Response).json();
+      if (errorData.message === "Saldo insuficiente.") {
+        setError("Saldo insuficiente na conta selecionada.");
+      } else {
+        setError("Erro ao adicionar a transação.");
+      }
     } else {
       setError("Erro ao adicionar a transação.");
     }
