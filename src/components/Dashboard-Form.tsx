@@ -45,7 +45,7 @@ export function Dashboard() {
         if (data && data.transactions) {
           const formatted = data.transactions.map((transaction: Transaction) => ({
             ...transaction,
-            category: transaction.category ? transaction.category.name : 'Sem categoria definida',
+            category: transaction.category || { name: 'Sem categoria definida'},
             dueDate: transaction.dueDate ? new Date(transaction.dueDate) : null, 
             paymentDate: transaction.paymentDate
               ? format(new Date(transaction.paymentDate), "dd 'de' MMMM 'de' yyyy", { locale: ptBR })
@@ -62,7 +62,6 @@ export function Dashboard() {
         console.error("Erro ao carregar dados", err);
       }
     }
-
     fetchData();
   }, []);
 

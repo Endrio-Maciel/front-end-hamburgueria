@@ -30,6 +30,20 @@ export function SignInForm () {
     }
   }, [])
 
+  
+  // para demostrar a aplicação para o usuário e recrutadores.
+  const handleAdminLogin = async () => {
+    try {
+      const adminInfo = new FormData();
+        adminInfo.append("email", "admin@example.com"); 
+        adminInfo.append("password", "admin123");
+
+        await signInWithEmailAndPassword(adminInfo); 
+    } catch {
+      console.log('Erro ao fazer login automático')
+    }
+  }
+
   return (
    <div className="space-y-4">
     <form className="space-y-4" onSubmit={handleSubmit} >
@@ -72,6 +86,15 @@ export function SignInForm () {
         {isPending ? <Loader2 className="size-4 animate-spin" /> : "Entrar"}
        </Button>
     </form>
+    <div>
+        <Button
+          className="w-full bg-blue-500 hover:bg-blue-600"
+          onClick={handleAdminLogin}
+          >
+            Entrar (Demostrativo) 
+        </Button>
+    </div>
+
    </div>
 
  )
