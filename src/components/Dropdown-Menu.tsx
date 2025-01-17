@@ -3,7 +3,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
 import Link from 'next/link'
 
 export function DropdownMenuSwithcer () {
-  // const {} = await getProfile()
  
   return (
   <DropdownMenu>

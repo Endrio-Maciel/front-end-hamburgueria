@@ -17,7 +17,7 @@ interface Transaction {
   title: string;
   amount: number;
   type: "INCOME" | "EXPENSE";
-  category: string;
+  category: {name: string};
   createdAt: string;
   dueDate: string;
   paymentDate: string;
@@ -43,10 +43,10 @@ export function Dashboard() {
         console.log('Transactions recebidas:', data);
 
         if (data && data.transactions) {
-          const formatted = data.transactions.map((transaction) => ({
+          const formatted = data.transactions.map((transaction: Transaction) => ({
             ...transaction,
             category: transaction.category ? transaction.category.name : 'Sem categoria definida',
-            dueDate: transaction.dueDate ? new Date(transaction.dueDate) : null,
+            dueDate: transaction.dueDate ? new Date(transaction.dueDate) : null, 
             paymentDate: transaction.paymentDate
               ? format(new Date(transaction.paymentDate), "dd 'de' MMMM 'de' yyyy", { locale: ptBR })
               : "Ainda não foi realizado",
@@ -70,11 +70,22 @@ export function Dashboard() {
  
     if (filters.startDate && filters.endDate) {
       const filtered = transactions.filter((transaction) => {
-        if(!transaction.dueDate) return false
-        return (
-          transaction.dueDate >= filters.startDate &&
-          transaction.dueDate <= filters.endDate
-        );
+        if (!transaction.dueDate) return false;
+      
+        const dueDate = new Date(transaction.dueDate); 
+      
+        if (filters.startDate && filters.endDate) {
+          return (
+            dueDate >= filters.startDate &&
+            dueDate <= filters.endDate
+          );
+        } else if (filters.startDate) {
+          return dueDate >= filters.startDate;
+        } else if (filters.endDate) {
+          return dueDate <= filters.endDate;
+        } else {
+          return true; 
+        }
       });
       setFilteredData(filtered);
     } else {
@@ -186,7 +197,7 @@ export function Dashboard() {
                 </div>
 
                 <div className="w-full h-64 flex justify-center items-center">
-                  <PieChart data={filteredData.map((item) => ({ category: item.category, amount: item.amount }))} />
+                  <PieChart data={filteredData.map((item) => ({ category: item.category.name, amount: item.amount }))} />
                 </div>
               </>
             ) : (
@@ -246,11 +257,11 @@ export function Dashboard() {
                         <span className="text-red-600">Saída</span>
                       )}
                     </TableCell>
-                    <TableCell>{transaction.category === undefined ? <span>Sem categoria definida.</span> : transaction.category}</TableCell>
+                    <TableCell>{transaction.category ? transaction.category.name : 'Sem categoria definida'}</TableCell>
                     <TableCell>{transaction.amount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</TableCell>
                     <TableCell>
                       {transaction.dueDate
-                        ? format(transaction.dueDate, "dd 'de' MMMM 'de' yyyy", { locale: ptBR })
+                        ? format(new Date(transaction.dueDate), "dd 'de' MMMM 'de' yyyy", { locale: ptBR })
                         : 'Data não definida'}
                     </TableCell>
                     <TableCell>{transaction.paymentDate}</TableCell>

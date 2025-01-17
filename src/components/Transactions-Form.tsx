@@ -45,7 +45,7 @@ export function TransactionForm() {
         console.log('Transações recebidas', data)
 
         if (data && data.transactions) {
-          const formatted = data.transactions.map((transaction) => ({
+          const formatted = data.transactions.map((transaction: Transaction) => ({
             ...transaction,
             dueDate: transaction.dueDate 
             ? format(new Date(transaction.dueDate), "dd 'de' MMMM 'de' yyyy", { locale: ptBR }) 
@@ -253,8 +253,8 @@ export function TransactionForm() {
               <label>Tipo</label>
               <select
                 className="text-black w-full p-2 mt-1 border rounded"
-                value={formData.type || ""}
-                onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                value={formData.type || "INCOME"}
+                onChange={(e) => setFormData({ ...formData, type: e.target.value as "INCOME" | 'EXPENSE'})}
               >
                 <option value="INCOME">Entrada</option>
                 <option value="EXPENSE">Saída</option>
