@@ -9,10 +9,27 @@ import { signInWithEmailAndPassword } from "./actions"
 import { useRouter } from "next/navigation"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertTriangle, Loader2 } from "lucide-react"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 export function SignInForm () {
   const router = useRouter()
+
+  const [isAdminPending, setIsAdminPending] = useState(false)
+
+  const handleAdminLogin = async () => {
+    setIsAdminPending(true)  
+    try {
+      const adminInfo = new FormData();
+      adminInfo.append("email", "admin@example.com"); 
+      adminInfo.append("password", "admin123");
+
+      await signInWithEmailAndPassword(adminInfo); 
+    } catch {
+      console.log('Erro ao fazer login automático')
+    } finally {
+      setIsAdminPending(false)
+    }
+  }
 
   const [ {success, message, errors}, handleSubmit, isPending ] = useFormState(
     signInWithEmailAndPassword,
@@ -29,21 +46,7 @@ export function SignInForm () {
       console.log('Token armazenado no localStorage:', tokenValue)
     }
   }, [])
-
   
-  // para demostrar a aplicação para o usuário e recrutadores.
-  const handleAdminLogin = async () => {
-    try {
-      const adminInfo = new FormData();
-        adminInfo.append("email", "admin@example.com"); 
-        adminInfo.append("password", "admin123");
-
-        await signInWithEmailAndPassword(adminInfo); 
-    } catch {
-      console.log('Erro ao fazer login automático')
-    }
-  }
-
   return (
    <div className="space-y-4">
     <form className="space-y-4" onSubmit={handleSubmit} >
@@ -59,7 +62,7 @@ export function SignInForm () {
 
      <h1>Login</h1>
        <div className="space-y-1">
-         <Label htmlFor="email">E-mail</ Label>
+         <Label htmlFor="email">E-mail</Label>
          <Input name="email" type="email" id="email" />
          
          {errors?.email && (
@@ -90,12 +93,11 @@ export function SignInForm () {
         <Button
           className="w-full bg-blue-500 hover:bg-blue-600"
           onClick={handleAdminLogin}
-          >
-            Entrar (Demostrativo) 
+          disabled={isAdminPending}  
+        >
+            {isAdminPending ? <Loader2 className="size-4 animate-spin" /> : "Entrar (Demonstrativo)"} 
         </Button>
     </div>
-
    </div>
-
  )
 }
